@@ -1,50 +1,51 @@
 import React from 'react'
 import * as yup from "yup";
-import {yupResolver} from "@hookform/resolvers/yup"
+import { yupResolver } from "@hookform/resolvers/yup"
 import { useForm } from 'react-hook-form';
 
 const FormWithYup = () => {
 
   const schema = yup.object({
-    firstName:yup
-    .string()
-    .required("First Name is requried"),
-    lastName:yup
-    .string()
-    .required('Last Name is reqeuired'),
+    firstName: yup
+      .string()
+      .required("First Name is requried"),
+    lastName: yup
+      .string()
+      .required('Last Name is reqeuired'),
 
-    // email:yup.string().email().required('Email is required'),
+    email: yup.string().email().required('Email is required'),
     // age:yup.number().integer().min(18).max(80).required("Age is requrired"),
-    // password:yup.string().min(8).max(15).required('Password is required'),
-    // confirmPassword:yup.string().oneOf([yup.ref("passsword"),null],"Password doesnt match")
-    // .required("confirm Password is required")
+    password: yup.string().min(8).max(15)
+      .required('Password is required'),
+    confirmPassword:yup.string().oneOf([yup.ref("password")],"Password doesnt match")
+    .required("confirm Password is required")
   });
 
-  
+
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors, isSubmitting }
   } = useForm({
-    resolver:yupResolver(schema)
+    resolver: yupResolver(schema)
   });
 
 
   const onSubmit = async (data) => {
 
-    await new Promise((resolve,reject) =>{
-      setTimeout(() =>{
-          resolve(data)
-      },2000)
+    await new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve(data)
+      }, 2000)
     })
 
     console.log("form submitted successfully")
     console.log(data)
 
-    setTimeout(() =>{
+    setTimeout(() => {
       reset()//reset form after submitting
-    },1000)
+    }, 1000)
 
   }
 
@@ -94,6 +95,71 @@ const FormWithYup = () => {
                 <p className='text-red-600'>{errors.lastName.message}</p>
               )}
             </div>
+
+            {/* email field */}
+            <div className='w-full'>
+              <label htmlFor="email"
+                className='block text-md font-medium text-gray-700 mb-2'
+              >Email
+              </label>
+
+              <input
+                {...register("email")}
+                type="email"
+                placeholder='someone@gmail.com'
+                className={`w-full border border-gray-300 rouded-lg px-3 py-2 ouline-0 ${errors.lastName ? "border-red-500" : "border-gray-300"}`}
+
+              />
+              {errors.email && (
+                <p className='text-red-600'>{errors.email.message}</p>
+              )}
+
+            </div>
+
+            {/* password field */}
+            <div className='w-full'>
+              <label htmlFor="password"
+                className='block text-md font-medium text-gray-700 mb-2'
+              >Password
+              </label>
+
+              <input
+                {...register("password")}
+                type="password"
+                placeholder='Enter password'
+                className={`w-full border border-gray-300 rouded-lg px-3 py-2 ouline-0 ${errors.password ? "border-red-500" : "border-gray-300"}`}
+
+              />
+              {errors.password && (
+                <p className='text-red-600'>{errors.password.message}</p>
+              )}
+
+            </div>
+
+            {/* confirm password field */}
+
+            <div className='w-full'>
+              <label htmlFor="confirmPassword"
+              className='block text-md font-medium text-gray-700 mb-2'>
+                Confirm Password
+              </label>
+
+              <input
+                {...register("confirmPassword")}
+                type="password"
+                placeholder='Enter ConfirmPassword'
+                className={`w-full border border-gray-300 rouded-lg px-3 py-2 ouline-0 ${errors.confirmPassword ? "border-red-500" : "border-gray-300"}`}
+              />
+
+               {errors.confirmPassword && (
+                <p className='text-red-600'>{errors.confirmPassword.message}</p>
+              )}
+
+            </div>
+
+            
+
+
 
             {/* button to submit form */}
             <button
