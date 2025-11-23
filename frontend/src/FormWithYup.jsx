@@ -16,7 +16,7 @@ const FormWithYup = () => {
     // email:yup.string().email().required('Email is required'),
     // age:yup.number().integer().min(18).max(80).required("Age is requrired"),
     // password:yup.string().min(8).max(15).required('Password is required'),
-    // confirmPassword:yup.string().oneOf([yup.ref("passsword"),null])
+    // confirmPassword:yup.string().oneOf([yup.ref("passsword"),null],"Password doesnt match")
     // .required("confirm Password is required")
   });
 
@@ -31,7 +31,14 @@ const FormWithYup = () => {
   });
 
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
+
+    await new Promise((resolve,reject) =>{
+      setTimeout(() =>{
+          resolve(data)
+      },2000)
+    })
+
     console.log("form submitted successfully")
     console.log(data)
 
@@ -58,13 +65,7 @@ const FormWithYup = () => {
                 className='block text-md font-medium text-gray-700 mb-2'
               >First Name</label>
               <input
-                {...register("firstName", {
-                  required: "First Name is required",
-                  minLength: {
-                    value: 2,
-                    message: "First Name must be at least 2 characters"
-                  }
-                })}
+                {...register("firstName")}
                 type="text"
                 placeholder='First Name'
                 className={`w-full border border-gray-300 rouded-lg px-3 py-2 ${errors.firstName ? "border-red-500" : "border-gray-300"}`}
@@ -82,9 +83,7 @@ const FormWithYup = () => {
               >Last Name</label>
               <input
                 {
-                ...register("lastName", {
-                  required: "Last Name is required",
-                })
+                ...register("lastName")
                 }
                 type="text"
                 placeholder='Last Name'
@@ -99,6 +98,7 @@ const FormWithYup = () => {
             {/* button to submit form */}
             <button
               type='submit'
+              disabled={isSubmitting}
               className='inline-block bg-blue-600 text-white hover:bg-blue-700 transform transition-all ease-in duration-300 py-3 rounded-lg'
             >
               {isSubmitting ? "Loading..." : "Submit"}
