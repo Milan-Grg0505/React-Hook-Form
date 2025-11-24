@@ -6,15 +6,25 @@ const FormWithReactHook = () => {
     register,
     handleSubmit,
     reset,
+    getValues,
     formState: { errors, isSubmitting }
   } = useForm({});
 
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
+
+    await new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve(data)
+      }, [2000])
+    })
+
     console.log("form submitted successfully")
     console.log(data)
 
-    reset()//reset form after submitting
+    setTimeout(() => {
+      reset()//reset form after submitting
+    }, 1000)
 
   }
   return (
@@ -42,7 +52,7 @@ const FormWithReactHook = () => {
                 })}
                 type="text"
                 placeholder='First Name'
-                className={`w-full border border-gray-300 rouded-lg px-3 py-2 ${errors.firstName ? "border-red-500" : "border-gray-300"}`}
+                className={`w-full border border-gray-300 rouded-lg px-3 py-2 rounded-lg ${errors.firstName ? "border-red-500" : "border-gray-300"}`}
               />
               {errors.firstName && (
                 <p className='text-red-600'>{errors.firstName.message}</p>
@@ -63,7 +73,7 @@ const FormWithReactHook = () => {
                 }
                 type="text"
                 placeholder='Last Name'
-                className={`w-full border border-gray-300 rouded-lg px-3 py-2 ouline-0 ${errors.lastName ? "border-red-500" : "border-gray-300"}`}
+                className={`w-full border border-gray-300 rouded-lg px-3 py-2 outline-0 rounded-lg ${errors.lastName ? "border-red-500" : "border-gray-300"}`}
               />
 
               {errors.lastName && (
@@ -77,6 +87,7 @@ const FormWithReactHook = () => {
             <div className='w-full'>
               <label htmlFor="email"
                 className='block text-md text-gray-600 font-medium mb-2'>
+                Email
               </label>
 
               <input
@@ -89,13 +100,137 @@ const FormWithReactHook = () => {
                 })}
                 type="email"
                 placeholder='Enter your email...'
-                className={`w-full border border-gray-300 rouded-lg px-3 py-2 ouline-0 ${errors.email ? "border-red-500" : "border-gray-300"}`}
+                className={`w-full border border-gray-300 rouded-lg px-3 py-2 outline-0 rounded-lg ${errors.email ? "border-red-500" : "border-gray-300"}`}
 
               />
 
               <p className='text-red-600'>{errors.email?.message}</p>
 
             </div>
+
+
+            {/* password section */}
+            <div className='w-full'>
+              <label
+                htmlFor="lastName"
+                className='block text-md font-medium text-gray-700 mb-2'
+              >Password
+              </label>
+
+              <input
+                {...register("password", {
+                  required: "Password is required",
+                  minLength: {
+                    value: 8,
+                    message: "Password must be up to 8 characters"
+                  },
+                  maxLength: {
+                    value: 15,
+                    message: "Password cannot exceed 15 characters"
+                  }
+                })}
+                type="password"
+                placeholder='Enter your password...'
+                className={`w-full border border-gray-300 rounded-lg px-3 py-2 outline-0 ${errors.password ? "border-red-500" : "border-gray-300"}`}
+              />
+
+              <p className='text-red-600'>{errors.password?.message}</p>
+
+            </div>
+
+            {/* confirm password section */}
+            <div className='w-full'>
+
+              <label
+                htmlFor="confirmPassword"
+                className='block text-md font-medium text-gray-700 mb-2'
+              >Confirm Password
+              </label>
+              <input
+                {
+                ...register("confirmPassword", {
+                  required: "Confirm password is required",
+                  validate: (value) => {
+                    return value === getValues("password") || "Password doesnot match"
+                  }
+
+                })
+                }
+                type='password'
+                placeholder='Confirm your password...'
+                className={`w-full border border-gray-300 px-3 py-2 rounded-lg outline-0 ${errors.confirmPassword}`}
+              />
+
+              <p className='text-red-600'>{errors.confirmPassword?.message}</p>
+            </div>
+
+            {/* gender section */}
+            <div className='w-full'>
+
+              <label
+                htmlFor="gender"
+                className='block text-md font-medium text-gray-700 mb-2'
+              >Gender
+              </label>
+
+              <div className="flex gap-4 items-center">
+                {[{ value: "male", label: "Male" },
+                { value: "female", label: "Female" },
+                { value: "otherss", label: "Others" }
+                ].map((option) => (
+                  <label key={option.value} className='flex space-x-2 items-center'>
+
+                    <input
+                      {...register("gender", {
+                        required: "Please select your gender"
+                      })}
+                      type="radio"
+                      value={option.value}
+                      className='text-blue-600 focus:ring-blue-500'
+                    />
+                    <span>{option.label}</span>
+
+                  </label>
+                ))}
+
+              </div>
+              <p className='text-red-600'>{errors.gender?.message}</p>
+            </div>
+
+            {/* skills section */}
+            <div className="w-full">
+              <label htmlFor="skills" className='text-md font-medium text-gray-600 mb-2'>
+                Skills
+              </label>
+
+              {/* using array method to display checkbox of skills */}
+
+              <div className='flex gap-4 items-center'>
+                {[
+                  { value: "node.js", label: "Node.js" },
+                  { value: "react.js", label: "React.js" },
+                  { value: "vue.js", label: "Vue.js" },
+                  { value: "angular", label: "Angular" }
+                ].map((option, index) => (
+                  <label key={index} className='flex space-x-2 items-center'>
+
+                    <input
+                      {...register("skills", {
+                        required: "Please select at least one skill"
+                      })}
+                      type="checkbox"
+                      value={option.value}
+                      className='text-blue-600 focus:ring-blue-500'
+                    />
+                    <span>{option.label}</span>
+                  </label>
+                ))}
+              </div>
+
+              <p className='text-red-600'>{errors.skills?.message}</p>
+
+            </div>
+
 
             {/* button to submit form */}
             <button
