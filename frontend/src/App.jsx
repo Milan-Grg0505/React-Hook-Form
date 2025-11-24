@@ -8,9 +8,9 @@ const App = () => {
 
   return (
     <>
-    <FormWithReactHook />
+    {/* <FormWithReactHook /> */}
     {/* <SimpleForm /> */}
-    {/* <FormWithYup /> */}
+    <FormWithYup />
     </>
   )
 }
