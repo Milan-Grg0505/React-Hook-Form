@@ -52,7 +52,7 @@ const FormWithReactHook = () => {
                 })}
                 type="text"
                 placeholder='First Name'
-                className={`w-full border border-gray-300 rouded-lg px-3 py-2 rounded-lg ${errors.firstName ? "border-red-500" : "border-gray-300"}`}
+                className={`w-full border border-gray-300 rouded-lg px-3 py-2 rounded-lg outline-none ${errors.firstName ? "border-red-500" : "border-gray-300"}`}
               />
               {errors.firstName && (
                 <p className='text-red-600'>{errors.firstName.message}</p>
@@ -231,7 +231,62 @@ const FormWithReactHook = () => {
 
             </div>
 
+            {/* select country section */}
 
+            <div className="w-full">
+              <label htmlFor="country" className='text-md font-medium text-gray-600 mb-3'>
+                Country
+              </label>
+
+              <select
+              {...register("country",{
+                required:"Please select your country"
+              })}
+              className={`w-full border border-gray-300  rounded-lg px-3 py-2 outline-0 ${errors.country ? "border-red-500":"border-gray-300"}`}
+              >
+                <option value="">Select your country</option>
+                <option value="usa">USA</option>
+                <option value="nepal">Nepal</option>
+                <option value="china">China</option>
+                <option value="korea">Korea</option>
+
+              </select>
+
+              <p className='text-red-600'>{errors.country?.message}</p>
+            </div>
+
+            {/* bio section */}
+
+            <div className='w-full'>
+              <label htmlFor="bio"
+                className='block text-md font-medium text-gray-700 mb-2'
+              >
+                Bio
+              </label>
+
+              <textarea 
+                {...register("bio",{
+                  required:"Bio is required",
+                  minLength:{
+                    value:10,
+                    message:"Bio must be at least 10 characters",
+                  },
+                  maxLength:{
+                    value:200,
+                    message:"Bio cannot exceed 200 characters"
+                  }
+                })}
+
+                rows={5}
+                className={`w-full resize-none border border-gray-300 rounded-lg px-3 py-2 outline-0 ${errors.bio ? "border-red-500":"border-gray-300"}`}
+              />
+              <p className='text-red-600'>{errors.bio?.message}</p>
+            </div>
+
+
+            
+
+    
             {/* button to submit form */}
             <button
               type='submit'
