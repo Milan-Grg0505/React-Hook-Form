@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-// import FormWithReactHook from './FormWithReactHook'
+import FormWithReactHook from './FormWithReactHook'
 import FormWithYup from './FormWithYup'
 // import SimpleForm from './SimpleForm'
 
@@ -8,9 +8,9 @@ const App = () => {
 
   return (
     <>
-    {/* <FormWithReactHook /> */}
+    <FormWithReactHook />
     {/* <SimpleForm /> */}
-    <FormWithYup />
+    {/* <FormWithYup /> */}
     </>
   )
 }

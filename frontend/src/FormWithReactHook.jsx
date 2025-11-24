@@ -71,6 +71,32 @@ const FormWithReactHook = () => {
               )}
             </div>
 
+
+            {/* email section */}
+
+            <div className='w-full'>
+              <label htmlFor="email"
+                className='block text-md text-gray-600 font-medium mb-2'>
+              </label>
+
+              <input
+                {...register("email", {
+                  required: "Email is required",
+                  pattern: {
+                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                    message: "Invalid email address"
+                  },
+                })}
+                type="email"
+                placeholder='Enter your email...'
+                className={`w-full border border-gray-300 rouded-lg px-3 py-2 ouline-0 ${errors.email ? "border-red-500" : "border-gray-300"}`}
+
+              />
+
+              <p className='text-red-600'>{errors.email?.message}</p>
+
+            </div>
+
             {/* button to submit form */}
             <button
               type='submit'
