@@ -8,7 +8,7 @@ const FormWithReactHook = () => {
     reset,
     getValues,
     formState: { errors, isSubmitting }
-  } = useForm({});
+  } = ujseForm({});
 
 
   const onSubmit = async (data) => {

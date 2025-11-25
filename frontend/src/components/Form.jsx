@@ -2,6 +2,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import React from 'react'
 import { useForm } from 'react-hook-form';
 import * as yup from "yup";
+import { useDispatch } from 'react-redux';
+import { addUser } from '../features/users/userSlice.js';
 
 const Form = () => {
 
@@ -57,12 +59,15 @@ const Form = () => {
     }
   })
 
+  const dispatch = useDispatch();
+
   // submit funtion 
   const onSubmit = async (data) => {
     // to wait for 2 seconds simulating an async operation
     await new Promise((resolve, reject) => {
       setTimeout(() => {
         resolve(data)
+        dispatch(addUser(data))
       }, 2000)
     })
 

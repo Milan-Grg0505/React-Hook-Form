@@ -1,8 +1,11 @@
 import React, { useState } from 'react'
 
-import FormWithReactHook from './FormWithReactHook'
-import FormWithYup from './FormWithYup'
+// import FormWithReactHook from './FormWithReactHook'
+// import FormWithYup from './FormWithYup'
 import Form from './components/Form'
+import UserTable from './components/UserTable'
+// import AddTodo from './components/AddTodo'
+// import Todos from './components/Todos'
 // import SimpleForm from './SimpleForm'
 
 const App = () => {
@@ -13,6 +16,10 @@ const App = () => {
     {/* <SimpleForm /> */}
     {/* <FormWithYup /> */}
     <Form />
+    <UserTable />
+
+    {/* <AddTodo/>
+    <Todos/> */}
 
     </>
   )
