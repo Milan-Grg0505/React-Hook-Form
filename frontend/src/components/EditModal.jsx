@@ -48,6 +48,7 @@ const EditModal = ({ open, close, editUsers }) => {
     })
 
     alert("Form edited successfully")
+    console.log(data)
 
     setTimeout(()=>{
       close();

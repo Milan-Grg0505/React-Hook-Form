@@ -314,7 +314,7 @@ const Form = () => {
                   {...register("bio")}
                   rows="5"
                   placeholder='Write something about yourself...'
-                  className={`w-full border px-4 py-3 border-gray-600 rounded-lg outline-0 transition-all  duration-200 ${errors.phone ? "border-red-500 focus:ring-2 focus:ring-red-200" : "border-gray-300 focus:ring-2 focus:ring-blue-200 focus:border-blue-500"}`}
+                  className={`w-full resize-none border px-4 py-3 border-gray-600 rounded-lg outline-0 transition-all  duration-200 ${errors.phone ? "border-red-500 focus:ring-2 focus:ring-red-200" : "border-gray-300 focus:ring-2 focus:ring-blue-200 focus:border-blue-500"}`}
                 ></textarea>
 
                 <p className='text-red-500 text-sm mt-1'>{errors.bio?.message}</p>

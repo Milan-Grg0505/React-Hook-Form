@@ -30,8 +30,10 @@ const UserTable = () => {
               <th className='border p-2'>First Name</th>
               <th className='border p-2'>Last Name</th>
               <th className='border p-2'>Email</th>
-              <th className='border p-2'>Password</th>
-              <th className='border p-2'>Address</th>
+              <th className='border p-2'>Course</th>
+              <th className='border p-2'>Gender</th>
+              <th className='border p-2'>StudyLevel</th>
+              <th className='border p-2'>DOB</th>
               <th className='border p-2'>Action</th>
             </tr>
           </thead>
@@ -49,8 +51,10 @@ const UserTable = () => {
                   <td className="border p-2">{user.firstName}</td>
                   <td className="border p-2">{user.lastName}</td>
                   <td className='border p-2'>{user.email}</td>
-                  <td className="border p-2">{user.password}</td>
-                  <td className="border p-2">{user.address}</td>
+                  <td className="border p-2">{user.course}</td>
+                  <td className="border p-2">{user.gender}</td>
+                  <td className="border p-2">{user.studylevel?.join(', ')}</td>
+                  <td className="border p-2">{user.dateofbirth}</td>
                   <td className='border p-2 space-x-3'>
 
                     <button
