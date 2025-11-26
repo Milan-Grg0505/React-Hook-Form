@@ -15,8 +15,8 @@ const App = () => {
     {/* <FormWithReactHook /> */}
     {/* <SimpleForm /> */}
     {/* <FormWithYup /> */}
-    <Form />
-    <UserTable />
+    {/* <Form />
+    <UserTable /> */}
 
     {/* <AddTodo/>
     <Todos/> */}

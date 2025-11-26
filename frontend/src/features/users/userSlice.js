@@ -44,10 +44,10 @@ const userSlice = createSlice({
         }
       });
       localStorage.setItem("users",JSON.stringify(state.users));
-    }
+    },
   }
 });
 
-export const {addUser,removeUser,updateUser} = userSlice.actions;
+export const {addUser,removeUser,updateUser,getUserById} = userSlice.actions;
 
 export default userSlice.reducer;

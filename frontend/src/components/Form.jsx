@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import * as yup from "yup";
 import { useDispatch } from 'react-redux';
 import { addUser } from '../features/users/userSlice.js';
+import { useNavigate } from 'react-router-dom';
 
 const Form = () => {
 
@@ -23,17 +24,17 @@ const Form = () => {
     address: yup.string().required("Address is required").min(10, "Must be at least 10 characters").max(100, "Cannot exceed 100 characters"),
 
     dateofbirth: yup.string().required("Date of Birth is required")
-    .test("valid-date", "Please enter a valid date", (value) =>{
-      if(!value) return false; // if no value is provided, it's invalid
-      const date = new Date(value);
-      return !isNaN(date.getTime());
-    })
-    .test("future-date", "Date of Birth cannot be in the future", (value) => {
-      if(!value) return true; // if no value, other validations will catch it
-      const today = new Date();
-      const date = new Date (value);
-      return date <= today;
-    }),
+      .test("valid-date", "Please enter a valid date", (value) => {
+        if (!value) return false; // if no value is provided, it's invalid
+        const date = new Date(value);
+        return !isNaN(date.getTime());
+      })
+      .test("future-date", "Date of Birth cannot be in the future", (value) => {
+        if (!value) return true; // if no value, other validations will catch it
+        const today = new Date();
+        const date = new Date(value);
+        return date <= today;
+      }),
 
     gender: yup.string().oneOf(["male", "female", "others"], "Please select at least one gender").required("Gender is required"),
 
@@ -61,18 +62,22 @@ const Form = () => {
 
   const dispatch = useDispatch();
 
+  const navigate = useNavigate();
+
   // submit funtion 
   const onSubmit = async (data) => {
     // to wait for 2 seconds simulating an async operation
     await new Promise((resolve, reject) => {
       setTimeout(() => {
         resolve(data)
-        dispatch(addUser(data))
+        dispatch(addUser(data)) 
+
       }, 2000)
     })
 
     console.log("data of the form is :", data);
     alert("Form submitted successfully!")
+    navigate("/displayUser")
 
     setTimeout(() => {
       reset() //reset the fields after one second
