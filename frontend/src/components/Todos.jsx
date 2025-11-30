@@ -1,9 +1,14 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { removeTodo, updateTodo } from '../features/todo/todoSlice.js'
+import { removeTodo, updateTodo,fetchTodos } from '../features/todo/todoSlice.js'
+
+
 
 const Todos = () => {
-  const todos = useSelector((state) => state.todos);
+  const todos = useSelector((state) => state.todos.todos);
+  const status = useSelector((state) => state.todos.status);
+  const error = useSelector((state) => state.todos.error);
+  console.log(todos)
   const dispatch = useDispatch();
 
   const [editId, setEditId] = useState(null);
@@ -14,6 +19,12 @@ const Todos = () => {
     setEditText(todo.text);
   }
 
+  // useEffect(() =>{
+  //   if(status === "idle"){
+  //     dispatch(fetchTodos())
+  //   }
+  // },[dispatch,status])
+
   const saveUpdate = () => {
     dispatch(updateTodo({ id: editId, text: editText }))
     setEditId(null);
@@ -23,6 +34,15 @@ const Todos = () => {
     <>
       <div className="max-w-2xl mx-auto p-6">
         <h2 className="text-2xl font-bold text-gray-800 mb-6">Todos</h2>
+
+        <button 
+        onClick={(e) => dispatch(fetchTodos())}
+        className='bg-black text-white px-3 py-4 rounded-2xl'>
+          Fetch Todo
+        </button>
+
+        {status === "loading" && <p>Loading todos ...</p>}
+        {status === "rejected" && <p className='text-red-600'>Error:{error}</p>}
         <ul className="space-y-3">
           {todos.map((todo) => (
             <li
@@ -38,7 +58,7 @@ const Todos = () => {
                   onChange={(e) => setEditText(e.target.value)}
                 />
               ) : (
-                <span className="text-lg text-gray-800">{todo.text}</span>
+                <span className="text-lg text-gray-800">{todo.title}</span>
               )}
 
               <div className="flex gap-2">
